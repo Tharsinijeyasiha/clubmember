@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Campus Club Members</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            width: 800px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1f3c88;
+        }
+
+        .box {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #1f3c88;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 9px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #1f3c88;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            margin-top: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #14275c;
+        }
+
+        .result {
+            background-color: #f1f1f1;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <h1>Campus Club Members Management</h1>
+
+
+    <!-- ADD MEMBER -->
+
+    <div class="box">
+
+        <h2>1. Add Club Member</h2>
+
+        <form action="/add-member" method="POST">
+
+            <label>Member ID</label>
+            <input type="text"
+                   name="memberId"
+                   placeholder="Example: M001"
+                   required>
+
+            <label>Name</label>
+            <input type="text"
+                   name="name"
+                   placeholder="Enter name"
+                   required>
+
+            <label>Club Name</label>
+            <input type="text"
+                   name="clubName"
+                   placeholder="Example: Coding Club"
+                   required>
+
+            <label>Year of Study</label>
+            <input type="number"
+                   name="yearOfStudy"
+                   min="1"
+                   required>
+
+            <label>Role</label>
+            <input type="text"
+                   name="role"
+                   placeholder="Example: Member"
+                   required>
+
+            <label>Points</label>
+            <input type="number"
+                   name="points"
+                   min="0"
+                   required>
+
+            <label>Interests</label>
+            <input type="text"
+                   name="interests"
+                   placeholder="Example: Coding, AI, Music"
+                   required>
+
+            <label>Status</label>
+            <input type="text"
+                   name="status"
+                   value="Active"
+                   required>
+
+            <button type="submit">
+                Add Member
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- INSERT 4 MEMBERS -->
+
+    <div class="box">
+
+        <h2>2. Add 4 Sample Club Members</h2>
+
+        <a href="/insert-sample">
+
+            <button type="button">
+                Insert 4 Members
+            </button>
+
+        </a>
+
+    </div>
+
+
+    <!-- FILTER CLUB -->
+
+    <div class="box">
+
+        <h2>3. Find Members by Club and Points</h2>
+
+        <input type="text"
+               id="clubName"
+               placeholder="Club Name">
+
+        <input type="number"
+               id="minimumPoints"
+               placeholder="More than points">
+
+        <button onclick="filterClub()">
+            Search
+        </button>
+
+    </div>
+
+
+    <!-- SEARCH MEMBER -->
+
+    <div class="box">
+
+        <h2>4. Search Member by ID</h2>
+
+        <input type="text"
+               id="searchId"
+               placeholder="Example: M001">
+
+        <button onclick="searchMember()">
+            Search
+        </button>
+
+    </div>
+
+
+    <!-- UPDATE -->
+
+    <div class="box">
+
+        <h2>5. Update Role and Points</h2>
+
+        <form action="/update-member" method="POST">
+
+            <input type="text"
+                   name="memberId"
+                   placeholder="Member ID"
+                   required>
+
+            <input type="text"
+                   name="role"
+                   placeholder="New Role"
+                   required>
+
+            <input type="number"
+                   name="points"
+                   placeholder="New Points"
+                   required>
+
+            <button type="submit">
+                Update Member
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- INCREASE POINTS -->
+
+    <div class="box">
+
+        <h2>6. Increase Points for a Club</h2>
+
+        <form action="/increase-points" method="POST">
+
+            <input type="text"
+                   name="clubName"
+                   placeholder="Club Name"
+                   required>
+
+            <input type="number"
+                   name="points"
+                   placeholder="Points to Add"
+                   required>
+
+            <button type="submit">
+                Increase Points
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- RANGE -->
+
+    <div class="box">
+
+        <h2>7. Search Members by Points Range</h2>
+
+        <input type="number"
+               id="minPoints"
+               placeholder="Minimum Points">
+
+        <input type="number"
+               id="maxPoints"
+               placeholder="Maximum Points">
+
+        <button onclick="pointsRange()">
+            Search
+        </button>
+
+    </div>
+
+
+    <!-- DELETE -->
+
+    <div class="box">
+
+        <h2>8. Delete Member</h2>
+
+        <form action="/delete-member" method="POST">
+
+            <input type="text"
+                   name="memberId"
+                   placeholder="Member ID"
+                   required>
+
+            <button type="submit">
+                Delete Member
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- DISPLAY ALL -->
+
+    <div class="box">
+
+        <h2>9. Display All Remaining Members</h2>
+
+        <button onclick="showAllMembers()">
+            Display All Members
+        </button>
+
+        <div id="result"
+             class="result">
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+// Filter Club + Points
+
+async function filterClub() {
+
+    const clubName =
+        document.getElementById("clubName").value;
+
+    const points =
+        document.getElementById("minimumPoints").value;
+
+    const response =
+        await fetch(
+            `/filter-club?clubName=${encodeURIComponent(clubName)}&points=${points}`
+        );
+
+    const data =
+        await response.json();
+
+    document.getElementById("result").innerText =
+        JSON.stringify(data, null, 2);
+}
+
+
+// Search Member
+
+async function searchMember() {
+
+    const memberId =
+        document.getElementById("searchId").value;
+
+    const response =
+        await fetch(
+            `/search-member?memberId=${encodeURIComponent(memberId)}`
+        );
+
+    const text =
+        await response.text();
+
+    document.getElementById("result").innerText =
+        text;
+}
+
+
+// Points Range
+
+async function pointsRange() {
+
+    const min =
+        document.getElementById("minPoints").value;
+
+    const max =
+        document.getElementById("maxPoints").value;
+
+    const response =
+        await fetch(
+            `/points-range?min=${min}&max=${max}`
+        );
+
+    const data =
+        await response.json();
+
+    document.getElementById("result").innerText =
+        JSON.stringify(data, null, 2);
+}
+
+
+// Display All Members
+
+async function showAllMembers() {
+
+    const response =
+        await fetch("/all-members");
+
+    const data =
+        await response.json();
+
+    document.getElementById("result").innerText =
+        JSON.stringify(data, null, 2);
+}
+
+
+</script>
+
+</body>
+
+</html>
