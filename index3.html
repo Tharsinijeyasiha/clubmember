@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Travel Buddy Finder</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            width: 800px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1f3c88;
+        }
+
+        .box {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #1f3c88;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 9px;
+            margin-top: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #1f3c88;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            margin-top: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #14275c;
+        }
+
+        .result {
+            background-color: #f1f1f1;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Travel Buddy Finder</h1>
+
+
+   
+    <div class="box">
+
+        <h2>1. Add Travel Buddy</h2>
+
+        <form action="/add-buddy" method="POST">
+
+            <label>Buddy ID</label>
+            <input
+                type="text"
+                name="buddyId"
+                placeholder="Example: B001"
+                required
+            >
+
+            <label>Name</label>
+            <input
+                type="text"
+                name="name"
+                placeholder="Enter name"
+                required
+            >
+
+            <label>Destination</label>
+            <input
+                type="text"
+                name="destination"
+                placeholder="Example: Goa"
+                required
+            >
+
+            <label>Age</label>
+            <input
+                type="number"
+                name="age"
+                min="1"
+                required
+            >
+
+            <label>Budget</label>
+            <input
+                type="number"
+                name="budget"
+                min="0"
+                required
+            >
+
+            <label>Trip Duration (Days)</label>
+            <input
+                type="number"
+                name="tripDuration"
+                min="1"
+                required
+            >
+
+            <label>Interests</label>
+            <input
+                type="text"
+                name="interests"
+                placeholder="Example: Beach, Photography"
+                required
+            >
+
+            <label>Status</label>
+            <input
+                type="text"
+                name="status"
+                value="Active"
+                required
+            >
+
+            <button type="submit">
+                Add Travel Buddy
+            </button>
+
+        </form>
+
+    </div>
+
+
+    
+    <div class="box">
+
+        <h2>2. Add 4 Sample Travel Buddies</h2>
+
+        <a href="/insert-sample">
+            <button type="button">
+                Insert 4 Buddies
+            </button>
+        </a>
+
+    </div>
+
+
+    <div class="box">
+
+        <h2>3. Find Buddies by Destination and Budget</h2>
+
+        <input
+            type="text"
+            id="destination"
+            placeholder="Destination"
+        >
+
+        <input
+            type="number"
+            id="minimumBudget"
+            placeholder="Budget greater than"
+        >
+
+        <button onclick="filterDestination()">
+            Search
+        </button>
+
+    </div>
+
+
+    <div class="box">
+
+        <h2>4. Search Travel Buddy by ID</h2>
+
+        <input
+            type="text"
+            id="searchId"
+            placeholder="Example: B001"
+        >
+
+        <button onclick="searchBuddy()">
+            Search
+        </button>
+
+    </div>
+
+
+    <div class="box">
+
+        <h2>5. Update Destination and Budget</h2>
+
+        <form action="/update-buddy" method="POST">
+
+            <input
+                type="text"
+                name="buddyId"
+                placeholder="Buddy ID"
+                required
+            >
+
+            <input
+                type="text"
+                name="destination"
+                placeholder="New Destination"
+                required
+            >
+
+            <input
+                type="number"
+                name="budget"
+                placeholder="New Budget"
+                required
+            >
+
+            <button type="submit">
+                Update Buddy
+            </button>
+
+        </form>
+
+    </div>
+
+
+  
+    <div class="box">
+
+        <h2>6. Increase Budget for a Destination</h2>
+
+        <form action="/increase-budget" method="POST">
+
+            <input
+                type="text"
+                name="destination"
+                placeholder="Destination"
+                required
+            >
+
+            <input
+                type="number"
+                name="amount"
+                placeholder="Amount to Add"
+                required
+            >
+
+            <button type="submit">
+                Increase Budget
+            </button>
+
+        </form>
+
+    </div>
+
+
+   
+    <div class="box">
+
+        <h2>7. Search Buddies by Budget Range</h2>
+
+        <input
+            type="number"
+            id="minBudget"
+            placeholder="Minimum Budget"
+        >
+
+        <input
+            type="number"
+            id="maxBudget"
+            placeholder="Maximum Budget"
+        >
+
+        <button onclick="budgetRange()">
+            Search
+        </button>
+
+    </div>
+
+
+    <div class="box">
+
+        <h2>8. Delete Travel Buddy</h2>
+
+        <form action="/delete-buddy" method="POST">
+
+            <input
+                type="text"
+                name="buddyId"
+                placeholder="Buddy ID"
+                required
+            >
+
+            <button type="submit">
+                Delete Buddy
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="box">
+
+        <h2>9. Display All Remaining Buddies</h2>
+
+        <button onclick="showAllBuddies()">
+            Display All Buddies
+        </button>
+
+        <div
+            id="result"
+            class="result"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    
+
+    async function filterDestination() {
+
+        const destination =
+            document.getElementById("destination").value;
+
+        const budget =
+            document.getElementById("minimumBudget").value;
+
+        const response = await fetch(
+            `/filter-destination?destination=${encodeURIComponent(destination)}&budget=${budget}`
+        );
+
+        const data = await response.json();
+
+        document.getElementById("result").innerText =
+            JSON.stringify(data, null, 2);
+    }
+
+
+   
+
+    async function searchBuddy() {
+
+        const buddyId =
+            document.getElementById("searchId").value;
+
+        const response = await fetch(
+            `/search-buddy?buddyId=${encodeURIComponent(buddyId)}`
+        );
+
+        const text = await response.text();
+
+        document.getElementById("result").innerText = text;
+    }
+
+
+   
+
+    async function budgetRange() {
+
+        const min =
+            document.getElementById("minBudget").value;
+
+        const max =
+            document.getElementById("maxBudget").value;
+
+        const response = await fetch(
+            `/budget-range?min=${min}&max=${max}`
+        );
+
+        const data = await response.json();
+
+        document.getElementById("result").innerText =
+            JSON.stringify(data, null, 2);
+    }
+
+
+   
+
+    async function showAllBuddies() {
+
+        const response =
+            await fetch("/all-buddies");
+
+        const data =
+            await response.json();
+
+        document.getElementById("result").innerText =
+            JSON.stringify(data, null, 2);
+    }
+
+</script>
+
+</body>
+
+</html>
